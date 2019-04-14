@@ -122,4 +122,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-CRISPY_TEMPLATE_PACK="bootstrap4" # default is 2
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #profile_pics will be located
+MEDIA_URL = '/media/' # how to access in the browser
+
+CRISPY_TEMPLATE_PACK = "bootstrap4" # default is 2
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "login"

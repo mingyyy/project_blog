@@ -5,7 +5,8 @@ from .models import Profile
 
 
 class UserRegisterForm(UserCreationForm):
-    email=forms.EmailField() # default is required=True
+    email = forms.EmailField()
+    # default is required=True
 
     class Meta:
         model = User
@@ -13,8 +14,7 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email=forms.EmailField
-
+    email = forms.EmailField()
     class Meta:
         model = User
         fields = ['username', 'email']

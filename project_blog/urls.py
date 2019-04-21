@@ -24,8 +24,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('', include('sendemail.urls')),
     path('', include('blog.urls')),
     path('register/', user_views.register, name='register'),
+    path('profile/', user_views.profile, name='profile'),
     path('login/', LoginView.as_view(template_name="users/login.html"), name="login"),
     path('logout/', LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path('password-reset/', PasswordResetView.as_view(template_name="users/password_reset.html"),
@@ -35,8 +37,7 @@ urlpatterns = [
     path('password-reset-confirm/<uidb64>/<token>/',
          PasswordResetConfirmView.as_view(template_name="users/password_reset_confirm.html"),
          name="password_reset_confirm"),
-    path('password-reset-complete/<uidb64>/<token>/',
+    path('password-reset-complete/',
          PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"),
          name="password_reset_complete"),
-    path('profile/', user_views.profile, name='profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

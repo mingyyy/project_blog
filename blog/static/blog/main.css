@@ -10,6 +10,8 @@ h1, h2, h3, h4, h5, h6 {
 
 ul {
   margin: 0;
+  height: 100%;
+  padding: 0px 5px 0px 20px;
 }
 
 .bg-steel {
@@ -81,4 +83,57 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+.calendar {
+  width: 98%;
+  margin: auto;
+  font-size: 13px;
+}
+
+.calendar tr, .calendar td {
+  border: 1px solid black;
+}
+
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.calendar td {
+  width: 100px;
+  height: 100px;
+  padding: 20px 0px 0px 5px;
+}
+
+.month {
+  font-size: 25px;
+}
+
+.date {
+  font-size: 16px;
+}
+
+a {
+  color: #17a2b8;
+}
+
+.left{
+    float:left;
+}
+
+.right{
+    float:right;
+}
+
+.clearfix{
+    margin:15px;
+}
+
+.btn{
+outline: none;
+color: black;
+background-color: transparent;
+box-shadow: 0 0 0 0;
 }

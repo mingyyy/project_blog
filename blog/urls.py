@@ -5,7 +5,8 @@ from .views import (PostListView,
                     PostCreateView,
                     PostUpdateView,
                     PostDeleteView,
-                    UserPostListView)
+                    UserPostListView,
+                    CalendarView,)
 
 app_name = "blog"
 
@@ -17,6 +18,9 @@ urlpatterns =[
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('calendar/', CalendarView.as_view(), name='calendar'),
+    path('event/new/', views.event, name='event_new'),
+    path('event/edit/<int:event_id>', views.event, name='event_edit'),
 ]
 
 # looking for a template: <app>/<model>_<viewtype>.html => blog/post_list.html

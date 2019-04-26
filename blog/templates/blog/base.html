@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +16,10 @@
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>-->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>-->
 
-    <!-- XDSoft DateTimePicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <!--this must be declared first-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script> <!--this must be declared after jquery-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" rel="stylesheet"/>
+
 
     <title>Blog</title>
 
@@ -84,13 +83,14 @@
                 <li class="list-group-item list-group-item-light">Events</li>
               <br>
               <li class="list-group-item list-group-item-light">
-                  <input id="datetimepicker" type="text">
 
+                  <input id="datetime">
                   <script>
-                    $(function () {
-                      $("#datetimepicker").datetimepicker();
+                        $(document).ready(function(){
+                      $('#datetime').datetimepicker();
                     });
                   </script>
+
 
               </li>
               </ul>
@@ -99,7 +99,6 @@
         </div>
       </div>
     </main>
-
-
 </body>
+
 </html>

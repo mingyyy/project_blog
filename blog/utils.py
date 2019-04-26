@@ -11,8 +11,6 @@ class Calendar(HTMLCalendar):
         self.month = month
 
     def formatday(self, day, events):
-        for k in events:
-            print(k)
         events_per_day = events.filter(Q(start_time__day__lte=day, end_time__day__gte=day))
         # TODO need to fix the problem with crossing months/years
 

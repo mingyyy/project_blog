@@ -1,0 +1,18 @@
+{
+  "name": "project_blog",
+  "description": "This is a project following a tutorial - building a blog in django",
+  "main": "index.js",
+  "authors": [
+    "Mingyyy <j.yanming@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/mingyyy/project_blog",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

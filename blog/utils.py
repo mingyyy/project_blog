@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from .models import Event
+from django.db.models import Q, F, When
 
 
 class Calendar(HTMLCalendar):
@@ -10,7 +11,11 @@ class Calendar(HTMLCalendar):
         self.month = month
 
     def formatday(self, day, events):
-        events_per_day = events.filter(start_time__day__lte=day, end_time__day__gte=day)
+        for k in events:
+            print(k)
+        events_per_day = events.filter(Q(start_time__day__lte=day, end_time__day__gte=day))
+        # TODO need to fix the problem with crossing months/years
+
         d = ''
         for event in events_per_day:
             d += f'<li>{event.get_html_url}</li>'

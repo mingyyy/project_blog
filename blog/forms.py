@@ -1,6 +1,8 @@
-from django.forms import ModelForm, DateInput, EmailField, TextInput
+from django.forms import ModelForm, DateInput, EmailField, TextInput, Form, DateTimeField
 from .models import Event
 
+class DateForm(Form):
+    date = DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
 
 class ContactForm(ModelForm):
     from_email = EmailField()
@@ -12,6 +14,7 @@ class ContactForm(ModelForm):
 class EventForm(ModelForm):
     class Meta:
         model = Event
+        exclude = ["author",]
         # datetime-local is a HTML5 input type, format to make date time show on fields
         widgets = {
             'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),

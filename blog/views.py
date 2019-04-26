@@ -17,7 +17,7 @@ from django.http import HttpResponseRedirect
 from django.utils.safestring import mark_safe
 from .utils import Calendar
 import calendar
-from .forms import EventForm
+from .forms import EventForm, DateForm
 
 
 # function view
@@ -144,8 +144,11 @@ def event(request, event_id=None):
     else:
         instance = Event()
 
-    form = EventForm(request.POST or None, instance =instance)
-    if request.POST and form.is_valid():
+    form = EventForm(request.POST or None, instance=instance)
+    dateform = DateForm(request.POST)
+
+    if request.POST and form.is_valid() and dateform.is_valid():
         form.save()
+        dateform.save()
         return HttpResponseRedirect(reverse('blog:calendar'))
-    return render(request, 'blog/event.html',{'form': form, "pk": event_id})
+    return render(request, 'blog/event.html',{'form': form, "pk": event_id, 'dateform':dateform})

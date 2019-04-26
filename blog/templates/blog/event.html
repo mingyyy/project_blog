@@ -15,6 +15,11 @@
         {% csrf_token %}
         <table class="form form-table">
             {{ form|crispy }}
+            <script>
+            $(function() {
+            $( ".datetimepicker" ).datetimepicker();
+            });
+            </script>
             <tr>
                 <td colspan="2">
                     <button type="submit" class="btn btn-info right">Submit</button>

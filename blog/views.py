@@ -17,7 +17,8 @@ from django.http import HttpResponseRedirect
 from django.utils.safestring import mark_safe
 from .utils import Calendar
 import calendar
-from .forms import EventForm, DateForm
+from .forms import EventForm
+from django.contrib.auth.decorators import login_required
 
 
 # function view
@@ -137,6 +138,7 @@ def get_date(req_day):
         return datetime.today()
 
 
+@login_required
 def event(request, event_id=None):
     instance = Event()
     if event_id:
@@ -145,10 +147,12 @@ def event(request, event_id=None):
         instance = Event()
 
     form = EventForm(request.POST or None, instance=instance)
-    dateform = DateForm(request.POST)
 
-    if request.POST and form.is_valid() and dateform.is_valid():
-        form.save()
-        dateform.save()
+    print(request.POST)
+
+    if request.POST and form.is_valid():
+        event = form.save(commit=False)
+        event.author = request.user
+        event.save()
         return HttpResponseRedirect(reverse('blog:calendar'))
-    return render(request, 'blog/event.html',{'form': form, "pk": event_id, 'dateform':dateform})
+    return render(request, 'blog/event.html',{'form': form, "pk": event_id})

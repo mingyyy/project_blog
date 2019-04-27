@@ -23,6 +23,7 @@ from django.core.mail import BadHeaderError
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from secret import API_KEY
+from django.contrib import messages
 
 
 # function view
@@ -163,6 +164,7 @@ def event(request, event_id=None):
 
 
 def contact(request):
+
     if request.method == 'GET':
         form = ContactForm()
     else:
@@ -170,19 +172,17 @@ def contact(request):
         if form.is_valid():
             message = Mail(
                 from_email=form.cleaned_data['from_email'],
-                to_emails=form.cleaned_data['to_email'],
+                # to_emails=form.cleaned_data['to_email'],
+                to_emails="j.yanming@gmail.com",
                 subject=form.cleaned_data['subject'],
-                html_content=form.cleaned_data['message'])
+                html_content=form.cleaned_data['content'],)
             try:
                 # send_mail(subject, message, from_email, ['j.yanming@gmail.com'])
                 sg = SendGridAPIClient(API_KEY)
                 response = sg.send(message)
+                messages.success(request, "Your message has been sent! Thank you for contacting us.")
                 print(response.status_code)
             except BadHeaderError as e:
                 return HttpResponse(e.message)
-            return redirect('blog-success')
-    return render(request, "contact.html", {'form': form})
-
-
-def success(request):
-    return HttpResponse('Success! Thank you for your message.')
+            return redirect('blog:blog-home')
+    return render(request, "blog/contact.html", {'form': form})

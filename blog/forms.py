@@ -1,13 +1,12 @@
-from django.forms import ModelForm, DateInput, EmailField, TextInput, Form, DateTimeField
+from django.forms import ModelForm, DateInput, EmailField, TextInput, Form, CharField, Textarea
 from .models import Event
 
 
 class ContactForm(Form):
-    from_email = EmailField()
-    content = TextInput()
-
-    class Meta:
-        fields = ['content', 'from_email']
+    from_email = EmailField(required=True)
+    subject = CharField(max_length=50,required=True, help_text='50 characters max.')
+    content = CharField(widget=Textarea(attrs={'placeholder': 'Enter your message here.'}),
+                        required=True)
 
 
 class EventForm(ModelForm):

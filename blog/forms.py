@@ -2,10 +2,10 @@ from django.forms import ModelForm, DateInput, EmailField, TextInput, Form, Date
 from .models import Event
 
 
-
-class ContactForm(ModelForm):
+class ContactForm(Form):
     from_email = EmailField()
     content = TextInput()
+
     class Meta:
         fields = ['content', 'from_email']
 

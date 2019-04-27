@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -13,12 +13,16 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from datetime import datetime, date, timedelta
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.safestring import mark_safe
 from .utils import Calendar
 import calendar
-from .forms import EventForm
+from .forms import EventForm, ContactForm
 from django.contrib.auth.decorators import login_required
+from django.core.mail import BadHeaderError
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from secret import API_KEY
 
 
 # function view
@@ -156,3 +160,29 @@ def event(request, event_id=None):
         event.save()
         return HttpResponseRedirect(reverse('blog:calendar'))
     return render(request, 'blog/event.html',{'form': form, "pk": event_id})
+
+
+def contact(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            message = Mail(
+                from_email=form.cleaned_data['from_email'],
+                to_emails=form.cleaned_data['to_email'],
+                subject=form.cleaned_data['subject'],
+                html_content=form.cleaned_data['message'])
+            try:
+                # send_mail(subject, message, from_email, ['j.yanming@gmail.com'])
+                sg = SendGridAPIClient(API_KEY)
+                response = sg.send(message)
+                print(response.status_code)
+            except BadHeaderError as e:
+                return HttpResponse(e.message)
+            return redirect('blog-success')
+    return render(request, "contact.html", {'form': form})
+
+
+def success(request):
+    return HttpResponse('Success! Thank you for your message.')

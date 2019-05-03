@@ -125,7 +125,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-AWS_DEFAULT_ACL = None
 AWS_ACCESS_KEY_ID = S3_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = S3_SECRET_ACCESS_KEY
 AWS_STORAGE_BUCKET_NAME = S3_STORAGE_BUCKET_NAME

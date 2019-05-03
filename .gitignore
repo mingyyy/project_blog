@@ -8,3 +8,4 @@ __pychace__/*
 */*/__pycache__
 __pycache__
 staticfiles
+secret.py

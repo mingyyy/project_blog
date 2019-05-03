@@ -3,3 +3,4 @@ db.sqlite3
 secret_blog.py
 env
 staticfiles
+secret.py

@@ -1,4 +1,5 @@
 .idea
 db.sqlite3
-secret.py
+secret_blog.py
 env
+staticfiles

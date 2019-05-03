@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 # import django_heroku
-from secret import SECRET_KEY
+from secret_blog import SECRET_KEY, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_STORAGE_BUCKET_NAME
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -125,15 +125,34 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+AWS_DEFAULT_ACL = None
+AWS_ACCESS_KEY_ID = S3_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = S3_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME = S3_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'staticfiles'))
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
-                    ]
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #profile_pics will be located
-MEDIA_URL = '/media/' # how to access in the browser
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app_port/static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'project_portfolio.storage_backends.MediaStorage'
+
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'staticfiles'))
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'blog/static'),
+#                     ]
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+#
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #profile_pics will be located
+# MEDIA_URL = '/media/' # how to access in the browser
 
 CRISPY_TEMPLATE_PACK = "bootstrap4" # default is 2
 LOGIN_REDIRECT_URL = "/"

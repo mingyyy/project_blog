@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import BadHeaderError
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from secret import API_KEY
+from secret_blog import API_KEY
 from django.contrib import messages
 
 

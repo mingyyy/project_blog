@@ -1,9 +1,13 @@
 .idea
 db.sqlite3
-secret.py
+secret_blog.py
 env
+<<<<<<< HEAD
 */__pycache__
 staticfiles
 __pychace__/*
 */*/__pycache__
 __pycache__
+=======
+staticfiles
+>>>>>>> 8c969632d84ff1552345d272998dbeb81cc9a754

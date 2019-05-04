@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.js" ></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script> <!--this must be declared first-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script> <!--this must be declared after jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.js"></script> <!--this must be declared after jquery-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" rel="stylesheet"/>
 
 
@@ -39,7 +39,6 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
-                  <a class="nav-item nav-link" href="{% url 'blog:blog-home' %}">Home</a>
                   <a class="nav-item nav-link" href="{% url 'blog:blog-about' %}">About</a>
                   <a class="nav-item nav-link" href="{% url 'blog:calendar' %}">Calendar</a>
                   <a class="nav-item nav-link" href="{% url 'blog:blog-contact' %}">Contact Us</a>

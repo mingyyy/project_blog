@@ -2,5 +2,10 @@
 db.sqlite3
 secret_blog.py
 env
+*/__pycache__
+staticfiles
+__pychace__/*
+*/*/__pycache__
+__pycache__
 staticfiles
 secret.py

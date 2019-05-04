@@ -17,7 +17,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.safestring import mark_safe
 from .utils import Calendar
 import calendar
-from .forms import EventForm, ContactForm
+from .forms import EventForm, ContactForm, EventDeleteForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import BadHeaderError
 from sendgrid import SendGridAPIClient
@@ -146,6 +146,7 @@ def get_date(req_day):
 @login_required
 def event(request, event_id=None):
     instance = Event()
+
     if event_id:
         instance = get_object_or_404(Event, pk=event_id)
     else:
@@ -153,14 +154,20 @@ def event(request, event_id=None):
 
     form = EventForm(request.POST or None, instance=instance)
 
-    print(request.POST)
+    form_confirm = EventDeleteForm(request.POST or None)
 
     if request.POST and form.is_valid():
         event = form.save(commit=False)
+        if event.event_duration() is False:
+            messages.warning(request, "Your start and end dates are not valid!")
+            return redirect('blog:calendar')
         event.author = request.user
         event.save()
+        if form_confirm.is_valid() and request.POST['confirm'] == 'confirm':
+            event.delete()
         return HttpResponseRedirect(reverse('blog:calendar'))
-    return render(request, 'blog/event.html',{'form': form, "pk": event_id})
+
+    return render(request, 'blog/event.html',{'form': form, "pk": event_id, 'form_confirm': form_confirm})
 
 
 def contact(request):

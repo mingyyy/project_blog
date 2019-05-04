@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
     <link rel="shortcut icon" href="{% static 'blog/favicon-ming.ico' %}">
-        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.js" ></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script> <!--this must be declared first-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.js"></script> <!--this must be declared after jquery-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css" rel="stylesheet"/>
@@ -86,10 +86,11 @@
                   <input id="datetime">
                   <script>
                         $(document).ready(function(){
-                      $('#datetime').datetimepicker();
+                      $('#datetime').datetimepicker({
+                        ignoreReadonly: true,
+                        allowInputToggle: true});
                     });
                   </script>
-
 
               </li>
               </ul>

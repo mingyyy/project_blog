@@ -26,3 +26,11 @@ class EventForm(ModelForm):
         super(EventForm, self).__init__(*args, **kwargs)
         self.fields['start_time'].input_formats = ('%Y/%m/%d %H:%M',)
         self.fields['end_time'].input_formats = ('%Y/%m/%d %H:%M',)
+
+
+class EventDeleteForm(Form):
+    confirm = CharField(max_length=7, widget=Textarea(attrs={'placeholder': 'confirm','rows': 1, 'cols': 4}),
+                        required=False, label='')
+
+
+

@@ -27,7 +27,25 @@
             </tr>
 
         </table>
+        <br>
+        <div class="alert alert-warning">
+            If you wish to delete this event, please type confirm below, then click on the Delete button.
+            <!--<form method="post">-->
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-4 ">
+                        {{ form_confirm|crispy }}
+                    </div>
+
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-danger float-right">Delete</button>
+                    </div>
+                </div>
+            <!--</form>-->
+        </div>
+
     </form>
+
 
 
 <br><br>

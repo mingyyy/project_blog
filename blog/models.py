@@ -16,7 +16,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('blog:post-detail', kwargs={'pk':self.pk})
+        return reverse('blog:post-detail', kwargs={'pk': self.pk})
 
 
 class Event(models.Model):
@@ -34,13 +34,12 @@ class Event(models.Model):
         url = reverse('blog:event_edit', args=(self.id,))
         return f'<a href="{url}">{self.location}</a>'
 
-
-    # def nbr_nights(self):
-    #     delta = self.end_time - self.start_time
-    #     if delta >= 0:
-    #         return delta.days
-    #     else:
-    #         return "Wrong dates!"
+    def event_duration(self):
+        delta = self.end_time - self.start_time
+        if delta.days >= 0:
+            return delta.days
+        else:
+            return False
     #
     # def days_left(self):
     #     today = localtime(now())

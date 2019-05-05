@@ -17,7 +17,9 @@
             {{ form|crispy }}
             <script>
             $(function() {
-            $( ".datetimepicker" ).datetimepicker();
+            $(".datetimepicker").datetimepicker(
+                        {ignoreReadonly: true,
+                        allowInputToggle: true});
             });
             </script>
             <tr>

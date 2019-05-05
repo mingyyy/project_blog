@@ -153,7 +153,6 @@ def event(request, event_id=None):
         instance = Event()
 
     form = EventForm(request.POST or None, instance=instance)
-
     form_confirm = EventDeleteForm(request.POST or None)
 
     if request.POST and form.is_valid():
@@ -163,15 +162,18 @@ def event(request, event_id=None):
             return redirect('blog:calendar')
         event.author = request.user
         event.save()
-        if form_confirm.is_valid() and request.POST['confirm'] == 'confirm':
-            event.delete()
+        try:
+            if request.POST['confirm'] == 'confirm':
+                event.delete()
+                messages.warning(request, "The event has been deleted!")
+        except KeyError:
+            pass
         return HttpResponseRedirect(reverse('blog:calendar'))
     context = {'form': form, "pk": event_id, 'form_confirm': form_confirm}
     return render(request, 'blog/event.html',context)
 
 
 def contact(request):
-
     if request.method == 'GET':
         form = ContactForm()
     else:

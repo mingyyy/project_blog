@@ -11,14 +11,54 @@ class Calendar(HTMLCalendar):
         self.month = month
 
     def formatday(self, day, events):
-        events_per_day = events.filter(start_time__day__lte=day, end_time__day__gte=day)
-        # TODO need to fix the problem with crossing months/years
-        x = events.filter(start_time__day__lte =
-                            Case(When(start_time__month__lte=self.month,end_time__month__gt=self.month,
-                                    then=day)),
-                          ).values_list('location')
-        print(x)
-        # start_time__month__gt = self.month, end_time__month__gt = self.month,
+        # events_per_day = events.filter(start_time__day__lte=day, end_time__day__gte=day)
+        """
+        code logic for the Day filter
+        1. for events start and end in the same year
+        start_time__year = current year = end_time__year & start_time__month = current month = end_time__month,
+        start_time__day <= current day <= end_time__day
+        OR
+        start_time__year = current year = end_time__year & start_time__month < current month < end_time__month,
+        OR
+        start_time__year = current year = end_time__year & start_time__month = current month < end_time__month,
+        start_time__day <= current day
+        OR
+        start_time__year = current year = end_time__year & start_time__month < current month = end_time__month,
+        current day <= end_time__day
+        2. for events start and end in different years
+        start_time__year < current year < end_time__year
+        OR
+        start_time__year < current year = end_time__year & current month < end_time__month
+        OR
+        start_time__year < current year = end_time__year & current month = end_time__month,
+        current day <= end_time__day
+        OR
+        start_time__year = current year < end_time__year & start_time__month < current month
+        OR
+        start_time__year = current year < end_time__year & start_time__month = current month
+        start_time__day <= current day
+        """
+        events_per_day = events.filter(Q(start_time__year=self.year, end_time__year=self.year,
+                          start_time__month=self.month, end_time__month=self.month,
+                          start_time__day__lte=day, end_time__day__gte=day)|
+                        Q(start_time__year=self.year, end_time__year=self.year,
+                          start_time__month__lt=self.month, end_time__month__gt=self.month)|
+                        Q(start_time__year=self.year, end_time__year=self.year,
+                          start_time__month__lt=self.month, end_time__month=self.month,
+                          end_time__day__gte=day)|
+                        Q(start_time__year=self.year, end_time__year=self.year,
+                          start_time__month=self.month, end_time__month__gt=self.month,
+                          start_time__day__lte=day)|
+                        Q(start_time__year__lt=self.year, end_time__year__gt=self.year)|
+                        Q(start_time__year__lt=self.year, end_time__year=self.year,
+                          end_time__month__gt=self.month)|
+                        Q(start_time__year__lt=self.year, end_time__year=self.year,
+                          end_time__month=self.month, end_time__day__gte=day)|
+                        Q(start_time__year=self.year, end_time__year__gt=self.year,
+                          start_time__month__lt=self.month)|
+                        Q(start_time__year=self.year, end_time__year__gt=self.year,
+                          start_time__month=self.month, start_time__day__lte=day)
+                                       )
         d = ''
         for event in events_per_day:
             d += f'<li>{event.get_html_url}</li>'
@@ -33,8 +73,24 @@ class Calendar(HTMLCalendar):
         return f'<tr>{week}</tr>'
 
     def formatmonth(self, withyear=True):
-        events = Event.objects.filter(start_time__year__lte=self.year, start_time__month__lte=self.month,
-                                      end_time__year__gte=self.year, end_time__month__gte=self.month)
+        """
+        code logic for the Month filter
+        start_time__year = current year = end_time__year & start_time__month <= current month <= end_time__month
+        OR
+        start_time__year < current year < end_time__year
+        OR
+        start_time__year < current year = end_time__year & current month <= end_time__month
+        OR
+        start_time__year = current year < end_time__year & start_time__month <= current month
+        """
+        events = Event.objects.filter(Q(start_time__year=self.year, end_time__year=self.year,
+                                        start_time__month__lte=self.month, end_time__month__gte=self.month) |
+                                      Q(start_time__year__lt=self.year, end_time__year__gt=self.year) |
+                                      Q(start_time__year__lt=self.year, end_time__year=self.year,
+                                        end_time__month__gte=self.month) |
+                                      Q(start_time__year=self.year, end_time__year__gt=self.year,
+                                        start_time__month__lte=self.month)
+                                      )
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'

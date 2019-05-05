@@ -29,7 +29,7 @@ class EventForm(ModelForm):
 
 
 class EventDeleteForm(Form):
-    confirm = CharField(max_length=7, widget=Textarea(attrs={'placeholder': 'confirm','rows': 1, 'cols': 4}),
+    confirm = CharField(max_length=7, widget=Textarea(attrs={'placeholder': 'confirm', 'rows': 1, 'cols': 4}),
                         required=False, label='')
 
 

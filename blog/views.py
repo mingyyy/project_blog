@@ -166,8 +166,8 @@ def event(request, event_id=None):
         if form_confirm.is_valid() and request.POST['confirm'] == 'confirm':
             event.delete()
         return HttpResponseRedirect(reverse('blog:calendar'))
-
-    return render(request, 'blog/event.html',{'form': form, "pk": event_id, 'form_confirm': form_confirm})
+    context = {'form': form, "pk": event_id, 'form_confirm': form_confirm}
+    return render(request, 'blog/event.html',context)
 
 
 def contact(request):

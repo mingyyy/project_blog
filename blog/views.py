@@ -24,7 +24,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from secret_blog import API_KEY
 from django.contrib import messages
-
+from django.db.models import Q
 
 # function view
 def home(request):
@@ -195,3 +195,21 @@ def contact(request):
                 return HttpResponse(e.message)
             return redirect('blog:blog-home')
     return render(request, "blog/contact.html", {'form': form})
+
+
+def search(request):
+    template = "blog/search.html"
+    query = request.GET.get('q')
+
+    if query:
+        posts = Post.search().query('match', title=query)
+    else:
+        posts = ''
+
+    #
+    # results = Post.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
+    # pages = pagination(request, results, num=1)
+    # context ={'items': pages[0],
+    #           'page_range':pages[1],
+    #           }
+    return render(request, template, {'posts':posts})

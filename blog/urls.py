@@ -6,7 +6,7 @@ from .views import (PostListView,
                     PostUpdateView,
                     PostDeleteView,
                     UserPostListView,
-                    CalendarView,)
+                    CalendarView)
 
 app_name = "blog"
 
@@ -22,6 +22,7 @@ urlpatterns =[
     path('calendar/', CalendarView.as_view(), name='calendar'),
     path('event/new/', views.event, name='event_new'),
     path('event/edit/<int:event_id>', views.event, name='event_edit'),
+    path('search/',views.search, name='search'),
 ]
 
 # looking for a template: <app>/<model>_<viewtype>.html => blog/post_list.html

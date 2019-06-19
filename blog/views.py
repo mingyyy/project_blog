@@ -9,9 +9,6 @@ from django.views.generic import (
     DeleteView,
 )
 from .models import Post, Event
-import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 from datetime import datetime, date, timedelta
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.safestring import mark_safe
@@ -24,7 +21,13 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from secret_blog import API_KEY
 from django.contrib import messages
-from django.db.models import Q
+# from search.documents import PostDocument
+# from haystack.query import SearchQuerySet
+# from rest_framework.response import Response
+# from rest_framework.decorators import (
+#     api_view, renderer_classes,
+# )
+
 
 # function view
 def home(request):
@@ -197,19 +200,27 @@ def contact(request):
     return render(request, "blog/contact.html", {'form': form})
 
 
-def search(request):
-    template = "blog/search.html"
-    query = request.GET.get('q')
+# def search(request):
+#     template = "blog/search.html"
+#     query = request.GET.get('q')
+#
+#     if query:
+#         posts = PostDocument.search().query('match', title=query)
+#     else:
+#         posts = ''
+#     return render(request, template, {'posts':posts})
 
-    if query:
-        posts = Post.search().query('match', title=query)
-    else:
-        posts = ''
-
-    #
-    # results = Post.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
-    # pages = pagination(request, results, num=1)
-    # context ={'items': pages[0],
-    #           'page_range':pages[1],
-    #           }
-    return render(request, template, {'posts':posts})
+# @api_view(['POST'])
+# def search_post(request):
+#     title = request.data['title']
+#     posts = SearchQuerySet().models(Post).autocomplete(
+#         title__startswith=title)
+#
+#     searched_data = []
+#     for i in posts:
+#         all_results = {"title": i.title,
+#                        "content": i.content,
+#                        }
+#         searched_data.append(all_results)
+#
+#     return Response(searched_data)

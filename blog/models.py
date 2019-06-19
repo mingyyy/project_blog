@@ -1,8 +1,9 @@
+# from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.utils.timezone import localtime, now
+from search.utils import PostIndex
 
 
 class Post(models.Model):
@@ -17,6 +18,15 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post-detail', kwargs={'pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        return super(Post, self).save(*args, **kwargs)
+
+    # Add indexing method to Post
+    def indexing(self):
+        obj = PostIndex(meta={'id': self.id},
+                        author=self.author.username, date_posted=self.date_posted, title=self.title, content=self.content)
+        return obj.to_dict(include_meta=True)
 
 
 class Event(models.Model):

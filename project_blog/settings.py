@@ -43,15 +43,26 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
+    # 'haystack',
+    # 'elasticsearch',
     'django_elasticsearch_dsl',
-    # 'search',
+    'search',
+
 ]
 
-ELASTICSESARCH_DSL ={
-    'default':{
-        'hosts':'localhost:9200'
+ELASTICSEARCH_DSL ={
+    'default': {
+        'hosts': 'localhost:9200'
     },
 }
+
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+#         'URL': 'http://127.0.0.1:9200/',
+#         'INDEX_NAME': 'haystack',
+#     },
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -4,7 +4,7 @@ from blog.models import Post
 
 class SearchView(ListView):
     template_name = 'search/view.html'
-    paginate_by = 20
+    paginate_by = 10
     count = 0
 
     def get_context_data(self, *args, **kwargs):

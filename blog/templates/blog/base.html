@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
     <link rel="shortcut icon" href="{% static 'blog/favicon-ming.ico' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js" ></script>
@@ -32,15 +34,17 @@
         <header class="site-header">
           <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-              <a class="navbar-brand mr-4" href="/">Social Blog</a>
+              <a class="navbar-brand mr-4" href="/">Sample Blog</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
                   <a class="nav-item nav-link" href="{% url 'blog:blog-about' %}">About</a>
+                  <a class="nav-item nav-link" href="{% url 'search' %}">Search</a>
                   <a class="nav-item nav-link" href="{% url 'blog:calendar' %}">Calendar</a>
-                  <a class="nav-item nav-link" href="{% url 'blog:blog-contact' %}">Contact Us</a>
+                  <a class="nav-item nav-link" href="{% url 'blog:blog-contact' %}">Contact</a>
+
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
@@ -76,13 +80,12 @@
         <div class="col-md-4">
           <div class="content-section">
             <h3>What's new here</h3>
-            <p class='text-muted'>Please check back later, still under construction.
+            <p class='text-muted'>Please check back later, still under construction.</p>
               <ul class="list-group">
                 <li class="list-group-item list-group-item-light">Latest News</li>
                 <li class="list-group-item list-group-item-light">Events</li>
-              <br>
-              <li class="list-group-item list-group-item-light">
-
+                <br>
+                <li class="list-group-item list-group-item-light">
                   <input id="datetime">
                   <script>
                         $(document).ready(function(){
@@ -91,9 +94,9 @@
                         allowInputToggle: true});
                     });
                   </script>
-              </li>
+                </li>
               </ul>
-            </p>
+
           </div>
         </div>
       </div>

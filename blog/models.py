@@ -12,11 +12,8 @@ class PostManager(models.Manager):
 
         if query is not None:
             or_lookup = (
-                Q(title__icontains=query) | Q(content__icontains=query)
+                Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query)
             )
-
-
-            print(or_lookup)
             qq = qs.filter(or_lookup).distinct()
 
         return qq

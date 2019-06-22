@@ -18,14 +18,15 @@ from django.urls import path, include
 from users import views as user_views
 from django.contrib.auth.views import (LogoutView, LoginView,
     PasswordResetView, PasswordResetDoneView,PasswordResetConfirmView, PasswordResetCompleteView)
-from django.conf import settings
-from django.conf.urls.static import static
+from search.views import SearchView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('sendemail.urls')),
     path('', include('blog.urls')),
+    path('search/', SearchView.as_view(), name='search'),
+
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
     path('login/', LoginView.as_view(template_name="users/login.html"), name="login"),

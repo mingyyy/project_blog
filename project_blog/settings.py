@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-# import django_heroku
-from secret_blog import SECRET_KEY, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_STORAGE_BUCKET_NAME
+import django_heroku
+
+# from secret_blog import SECRET_KEY, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_STORAGE_BUCKET_NAME
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,15 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # deployment
+    'storages',
     # my apps
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
     'search',
-    # deployment
-    'boto',
-    'django-storages',
-
 ]
 
 MIDDLEWARE = [
@@ -130,9 +129,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 AWS_DEFAULT_ACL = None
-AWS_ACCESS_KEY_ID = S3_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY = S3_SECRET_ACCESS_KEY
-AWS_STORAGE_BUCKET_NAME = S3_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID = os.environ.get('S3_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_STORAGE_BUCKET_NAME')
+
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -149,15 +149,6 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'project_blog.storage_backends.MediaStorage'
 
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'staticfiles'))
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'blog/static'),
-#                     ]
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-#
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #profile_pics will be located
-# MEDIA_URL = '/media/' # how to access in the browser
-
 CRISPY_TEMPLATE_PACK = "bootstrap4" # default is 2
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "login"
@@ -171,6 +162,6 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

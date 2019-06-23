@@ -19,14 +19,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import BadHeaderError
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from secret_blog import API_KEY
+import os
 from django.contrib import messages
-# from search.documents import PostDocument
-# from haystack.query import SearchQuerySet
-# from rest_framework.response import Response
-# from rest_framework.decorators import (
-#     api_view, renderer_classes,
-# )
+
 
 
 # function view
@@ -190,7 +185,7 @@ def contact(request):
                 html_content=form.cleaned_data['content'],)
             try:
                 # send_mail(subject, message, from_email, ['j.yanming@gmail.com'])
-                sg = SendGridAPIClient(API_KEY)
+                sg = SendGridAPIClient(os.environ.get('API_KEY'))
                 response = sg.send(message)
                 messages.success(request, "Your message has been sent! Thank you for contacting us.")
                 print(response.status_code)

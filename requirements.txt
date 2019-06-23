@@ -5,6 +5,7 @@ certifi==2019.3.9
 chardet==3.0.4
 defusedxml==0.6.0
 dj-database-url==0.5.0
+dj-static==0.0.6
 Django==2.2.2
 django-allauth==0.39.1
 django-crispy-forms==1.7.2
@@ -14,6 +15,7 @@ django-heroku==0.3.1
 django-sendgrid-v5==0.8.0
 django-smtp-ssl==1.0
 django-storages==1.7.1
+django-toolbelt==0.0.1
 djangorestframework==3.9.3
 djangorestframework-stubs==0.4.2
 docutils==0.14
@@ -42,5 +44,6 @@ s3transfer==0.2.0
 sendgrid==6.0.4
 six==1.12.0
 sqlparse==0.3.0
+static3==0.7.0
 urllib3==1.24.2
 whitenoise==4.1.2

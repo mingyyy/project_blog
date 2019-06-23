@@ -9,3 +9,4 @@ __pychace__/*
 __pycache__
 staticfiles
 secret.py
+local_settings.py

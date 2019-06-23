@@ -1,4 +1,7 @@
 .idea
+*.log
+*.pot
+*.pyc
 db.sqlite3
 secret_blog.py
 env
@@ -9,3 +12,4 @@ __pychace__/*
 __pycache__
 staticfiles
 secret.py
+local_settings.py

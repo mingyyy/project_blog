@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
@@ -8,10 +9,13 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
+            authenticated_user = authenticate(username = new_user.username,
+                                              password=request.POST['password1'])
+            login(request, authenticated_user)
             username = form.cleaned_data.get('username')
-            messages.success(request, f"{username} your account has been created! You are now ready to log in!")
-            return redirect('login')
+            messages.success(request, f"{username} your account has been created and you are logged in!")
+            return HttpResponseRedirect(reverse('blog:blog-home'))
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
